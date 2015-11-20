@@ -15,6 +15,7 @@ public class DataNormalizator {
 		double[] minVector = data[0].getData().clone();
 		double[] maxVector = data[0].getData().clone();
 		
+		//find minimum and maximum values for each attribute
 		for (int i = 1; i < data.length; i++) {
 			for (int j = 0; j < dimension; j++) {
 				if (data[i].getData()[j] < minVector[j]) {
@@ -25,6 +26,7 @@ public class DataNormalizator {
 			}
 		}
 		
+		//converts each attribute to interval [0;1] 
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < dimension; j++) {
 				data[i].getData()[j] = (data[i].getData()[j] - minVector[j]) / (maxVector[j] - minVector[j]);
@@ -35,8 +37,9 @@ public class DataNormalizator {
 	private void zScoreNormalization(Vector[] data) {
 		int dimension = data[0].dimension();
 		double[] mean = new double[dimension];
-		double[] standartDeviation = new double[dimension];
+		double[] standardDeviation = new double[dimension];
 			
+		//compute mean for each attribute
 		for (int i = 0; i < dimension; i++) {
 			double value = 0;
 				
@@ -46,19 +49,19 @@ public class DataNormalizator {
 			mean[i] = value / data.length;
 		}
 		
-		
+		//compute standard deviation for each attribute 
 		for (int i = 0; i < dimension; i++) {
 			double value = 0;
 			
 			for (int j = 0; j < data.length; j++) {
 				value += Math.pow((data[j].getData()[i] - mean[i]), 2);
 			}
-			standartDeviation[i] = Math.sqrt((value / data.length));
+			standardDeviation[i] = Math.sqrt((value / data.length));
 		}
 		
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < dimension; j++) {
-				data[i].getData()[j] = (data[i].getData()[j] - mean[j]) / standartDeviation[j];
+				data[i].getData()[j] = (data[i].getData()[j] - mean[j]) / standardDeviation[j];
 			}
 		}
 	}
