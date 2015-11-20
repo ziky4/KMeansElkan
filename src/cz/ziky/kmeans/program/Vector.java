@@ -18,6 +18,7 @@ public class Vector {
 		return dimension;
 	}
 	
+	//count euclidean distance
 	public double countDistance(Vector vector) {
 		double sum = 0;
 			
